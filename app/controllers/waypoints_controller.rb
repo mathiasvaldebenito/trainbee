@@ -1,9 +1,11 @@
 class WaypointsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_waypoint, only: %i[ show edit update destroy ]
 
   # GET /waypoints or /waypoints.json
   def index
     @waypoints = Waypoint.all
+    @vehicles = Vehicle.all
   end
 
   # GET /waypoints/1 or /waypoints/1.json
@@ -21,12 +23,14 @@ class WaypointsController < ApplicationController
 
   # POST /waypoints or /waypoints.json
   def create
+    puts waypoint_params
+    # @vehicle_id = Vehicle.where(patent: waypoint_params.patent).id
     @waypoint = Waypoint.new(waypoint_params)
 
     respond_to do |format|
       if @waypoint.save
-        format.html { redirect_to @waypoint, notice: "Waypoint was successfully created." }
-        format.json { render :show, status: :created, location: @waypoint }
+        msg = { :status => "ok", :message => "Success!", :html => "<b>...</b>" }
+        format.json  { render :json => msg }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @waypoint.errors, status: :unprocessable_entity }

@@ -30,4 +30,4 @@
 
 <%= link_to 'New Waypoint', new_waypoint_path %>
 
-<%= react_component("Hello", { name: "react-rails" }) %>
+<%= react_component("Hello", { waypoints: @waypoints , vehicles: @vehicles }) %>
