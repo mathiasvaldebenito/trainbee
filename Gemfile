@@ -64,4 +64,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ast', '~> 2.4.2'
 gem 'rubocop', '~> 0.67.2'
 gem 'bootstrap', '~> 4.3.1'
+gem 'webpacker'
 gem 'react-rails'
