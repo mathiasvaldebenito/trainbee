@@ -14,6 +14,12 @@
  *= require_self
  */
 
+
+ul {
+    text-align: center;
+    list-style-position: inside;
+}
+
 .center{
     text-align: center;
     vertical-align: center;
@@ -50,6 +56,13 @@
 .label-form {
     font-weight: bold;
     margin: 5px;
+}
+
+.pointer {
+    width: 5%;
+    height: 5%;
+    position: absolute;
+    transform: translate(250px, 100px);
 }
 
 

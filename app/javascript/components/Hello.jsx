@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Santiago from './../../assets/images/comunas.svg';
+import Pointer from './../../assets/images/location-icon.svg';
 
 const { URL } = require('./../packs/application');
 
@@ -10,7 +11,10 @@ function Example(props) {
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  const [patent, setPatent] = useState('');
+  const [patent, setPatent] = useState(''); 
+
+  const [pointerXY, setPointerXY] = useState({transform: "translate(0px, 0px)", display: "none"});
+
 
   const handleSubmmit = (e) => {
       e.preventDefault();
@@ -49,6 +53,7 @@ function Example(props) {
         console.log("new waypoint added");
         console.log(newWaypoint);
         setWaypoints(result => [...result, newWaypoint]);
+        setPointerXY({transform: `translate(${latitude}px, ${longitude}px)`});
         console.log(waypoints);
       });
 
@@ -58,8 +63,9 @@ function Example(props) {
 
     <>
     <div className="box">
-        <div className="form">
-          <form className="center" onSubmit={handleSubmmit}>
+        <div className="form center">
+          <h2>Registra un Waypoint!</h2>
+          <form onSubmit={handleSubmmit}>
             <label className="label-form">Latitud</label>
             <input
               type="text"
@@ -85,8 +91,17 @@ function Example(props) {
               <button className="btn">Enviar</button>
             </div>
           </form>
+          <div>
+            <h2>Vehiculos registrados</h2> 
+            <ul>
+              { vehicles.map((vehicle) => (
+                <li>{vehicle.patent}</li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div>
+          <img src={Pointer} alt="Pointer" style={pointerXY}/>
           <img src={Santiago} alt="Santiago" />
         </div>
         <div className="form">
@@ -100,7 +115,7 @@ function Example(props) {
             </thead>
             <tbody>
               { waypoints.map((waypoint) => (
-                <tr>
+                <tr key={waypoint.id}>
                   <td>{waypoint.latitude}</td>
                   <td>{waypoint.longitude}</td>
                   <td>{waypoint.vehicle_id}</td>
