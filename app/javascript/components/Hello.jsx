@@ -8,13 +8,9 @@ function Example(props) {
   const [waypoints, setWaypoints] = useState([]);
   const [vehicles, setVehicles] = useState(props.vehicles);
 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [patent, setPatent] = useState(null);
-
-  console.log(props.waypoints);
-  console.log(props.vehicles);
-  console.log(URL);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [patent, setPatent] = useState('');
 
   const handleSubmmit = (e) => {
       e.preventDefault();
@@ -31,10 +27,9 @@ function Example(props) {
       const newVehicle = {patent};
 
       console.log(newVehicle);
-      console.log(newWaypoint);
 
       // if vehicle does not exist, we register it.
-      if (!vehicles.includes(newVehicle.patent)) {
+      /*if (!vehicles.includes(newVehicle.patent)) {
         fetch(`${URL}/vehicles`, {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
@@ -43,61 +38,78 @@ function Example(props) {
           console.log("new vehicle added");
         });
       };
-      
+
+      */
+
       fetch(`${URL}/waypoints`, {
         method: 'POST',
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(newWaypoint)
       }).then(() =>{
         console.log("new waypoint added");
+        console.log(newWaypoint);
         setWaypoints(result => [...result, newWaypoint]);
+        console.log(waypoints);
       });
+
   }
 
   return (
 
     <>
-    
-    <div>
-      <form onSubmit={handleSubmmit}>
-        <label>Latitud:</label>
-        <input
-          type="text"
-          required
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        />
-        <label>Longitud:</label>
-        <input
-          type="text"
-          required
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
-        />
-        <label>Patente:</label>
-        <input
-          type="text"
-          required
-          value={patent}
-          onChange={(e) => setPatent(e.target.value)}
-        />
-
-        <button>Enviar</button>
-      </form>
-    </div>
-      { waypoints.map( (waypoint) => {
-        <div key={waypoint.id}>
-          <span>Latitud: {waypoint.latitude}</span>
-          <span>Longitud: {waypoint.longitude}</span>
-          <span>Patente: {waypoint.patent}</span>
+    <div className="box">
+        <div className="form">
+          <form className="center" onSubmit={handleSubmmit}>
+            <label className="label-form">Latitud</label>
+            <input
+              type="text"
+              required
+              value={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+            />
+            <label className="label-form">Longitud</label>
+            <input
+              type="text"
+              required
+              value={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+            />
+            <label className="label-form">Patente</label>
+            <input
+              type="text"
+              required
+              value={patent}
+              onChange={(e) => setPatent(e.target.value)}
+            />
+            <div className="center">
+              <button className="btn">Enviar</button>
+            </div>
+          </form>
         </div>
-      }) }
-    <div>
-
-    </div>
-
-    <div className="center">
-      <img src={Santiago} alt="Santiago" />
+        <div>
+          <img src={Santiago} alt="Santiago" />
+        </div>
+        <div className="form">
+          <table className="center">
+            <thead>
+              <tr>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Patente</th>
+              </tr>
+            </thead>
+            <tbody>
+              { waypoints.map((waypoint) => (
+                <tr>
+                  <td>{waypoint.latitude}</td>
+                  <td>{waypoint.longitude}</td>
+                  <td>{waypoint.vehicle_id}</td>
+                </tr>
+                )) 
+              }
+            </tbody>
+          </table>
+        </div>
     </div>
     
     </>
