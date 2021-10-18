@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @waypoint.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @waypoint.longitude %>
+</p>
+
+<p>
+  <strong>Vehicle patent:</strong>
+  <%= @waypoint.vehicle.patent %>
+</p>
+
+<%= link_to 'Edit', edit_waypoint_path(@waypoint) %> |
+<%= link_to 'Back', waypoints_path %>
