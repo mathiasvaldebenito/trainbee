@@ -1,1 +1,1 @@
-release: rake db:setup
+release: rake db:create && rake db:migrate
