@@ -33,14 +33,14 @@ function Waypoints(props) {
         <div className="form center">
           <h2>Registra un Waypoint!</h2>
           <form onSubmit={handleSubmmit}>
-            <label className="label-form">Latitud</label>
+            <label className="label-form">Latitud (Rango:[0,550])</label>
             <input
               type="text"
               required
               value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
             />
-            <label className="label-form">Longitud</label>
+            <label className="label-form">Longitud (Rango:[0,550])</label>
             <input
               type="text"
               required
