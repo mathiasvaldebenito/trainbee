@@ -8,4 +8,4 @@ To run app locally execute the following comands:
 * `docker-compose up`
 
 Finally, set the global variable _LOCAL_ at _./app/javascript/packs/aplicattion.js_ to **true**.
-The app should be running at [![localhost](http://localhost:3000)]()
+The app should be running at  [localhost:3000](http://localhost:3000)
