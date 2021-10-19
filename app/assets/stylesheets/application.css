@@ -27,6 +27,7 @@ ul {
 
 .box {
     display: flex;
+    height: 100vh;
 }
 
 .btn {
@@ -58,11 +59,36 @@ ul {
     margin: 5px;
 }
 
-.pointer {
-    width: 5%;
-    height: 5%;
+.size-pointer {
+    width: 50px;
+    height: 50px;
     position: absolute;
-    transform: translate(250px, 100px);
+    z-index: 2;
+}
+
+.tooltip {
+    position: absolute;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+
+}
+  
+.tooltip .tooltiptext {
+    width: 120px;
+    background-color: #f4b63d;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-weight: bold;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
 }
 
 .bitacora {
@@ -73,8 +99,12 @@ ul {
     background-color: #fcf9d3;
 }
 
-.map {
-    margin: 20px;
+.map-container {
+    height: 550px;
+    width: 550px;
+    margin-left: 30vh;
 }
 
-
+.map {
+    position: absolute;
+}

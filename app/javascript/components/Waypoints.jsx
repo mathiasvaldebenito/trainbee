@@ -6,12 +6,11 @@ import apiService from './services';
 const { URL } = require('./../packs/application');
 
 function Waypoints(props) {
-  const [waypoints, setWaypoints] = useState([]);
   const [vehicles, setVehicles] = useState(props.vehicles);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [patent, setPatent] = useState(''); 
-  const [pointerXY, setPointerXY] = useState({transform: "translate(0px, 0px)", display: "none"});
+  const [pointerXY, setPointerXY] = useState({margin: "0px", display: "none"});
 
 
   const handleSubmmit = async (e) => {
@@ -23,13 +22,13 @@ function Waypoints(props) {
       }
       const newWaypoint = await apiService.registerWaypoint(URL, 
                   {latitude, longitude, "vehicle_id": vehicle.id});      
-      setWaypoints(result => [...result, newWaypoint]);
       setPointerXY({transform: `translate(${newWaypoint.latitude}px, ${newWaypoint.longitude}px)`});
   }
 
   return (
 
     <>
+    <h1 className="center">Last Mile</h1>
     <div className="box">
         <div className="form center">
           <h2>Registra un Waypoint!</h2>
@@ -63,35 +62,17 @@ function Waypoints(props) {
             <h2>Vehiculos registrados</h2> 
             <ul>
               { vehicles.map((vehicle) => (
-                <li>{vehicle.patent}</li>
+                <li key={`${vehicle.id}`}>{vehicle.patent}</li>
               ))}
             </ul>
           </div>
         </div>
-        <div>
-          <img src={Pointer} alt="Pointer" style={pointerXY}/>
-          <img src={Santiago} alt="Santiago" className="map"/>
-        </div>
-        <div className="form">
-          <table className="center">
-            <thead>
-              <tr>
-                <th>Latitud</th>
-                <th>Longitud</th>
-                <th>Patente</th>
-              </tr>
-            </thead>
-            <tbody>
-              { waypoints.map((waypoint) => (
-                <tr key={waypoint.id}>
-                  <td>{waypoint.latitude}</td>
-                  <td>{waypoint.longitude}</td>
-                  <td>{waypoint.patent}</td>
-                </tr>
-                )) 
-              }
-            </tbody>
-          </table>
+        <div className="map-container">
+          <div className="tooltip" style={pointerXY}>
+            <img src={Pointer} alt="Pointer" className="size-pointer"/>
+            <span class="tooltiptext">{patent}</span>
+          </div>
+          <img src={Santiago} alt="Santiago"/>
         </div>
     </div>
     
