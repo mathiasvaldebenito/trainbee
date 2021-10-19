@@ -18,9 +18,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  host: postgres
+  host: db
   username: postgres
-  password:
+  password: password
   pool: 5
   database: myapp_development
 

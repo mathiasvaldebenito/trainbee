@@ -21,6 +21,6 @@ var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
 
-const LOCAL = false;
+const LOCAL = true;
 
 export const URL = LOCAL? 'http://localhost:3000': 'https://morning-springs-25604.herokuapp.com';

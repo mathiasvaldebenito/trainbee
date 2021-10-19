@@ -1,24 +1,10 @@
 # README
+#### Development setup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run app locally execute the following comands:
 
-Things you may want to cover:
+* `docker-compose build`
+* `docker-compose run web rake db:setup`
+* `docker-compose up`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Finally, set the global variable _LOCAL_ at _./app/javascript/packs/aplicattion.js_ to **true**
