@@ -23,11 +23,9 @@ class VehiclesController < ApplicationController
   # POST /vehicles or /vehicles.json
   def create
     @vehicle = Vehicle.new(vehicle_params)
-
     respond_to do |format|
       if @vehicle.save
-        format.html { redirect_to @vehicle, notice: "Vehicle was successfully created." }
-        format.json { render :show, status: :created, location: @vehicle }
+        format.json { render :json => {id: @vehicle.id, patent: @vehicle.patent} }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }

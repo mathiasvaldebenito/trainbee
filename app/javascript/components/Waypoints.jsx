@@ -4,7 +4,7 @@ import Pointer from './../../assets/images/location-icon.svg';
 
 const { URL } = require('./../packs/application');
 
-function Example(props) {
+function Waypoints(props) {
   // Declara una nueva variable de estado, la cual llamaremos “count”
   const [waypoints, setWaypoints] = useState([]);
   const [vehicles, setVehicles] = useState(props.vehicles);
@@ -16,47 +16,40 @@ function Example(props) {
   const [pointerXY, setPointerXY] = useState({transform: "translate(0px, 0px)", display: "none"});
 
 
-  const handleSubmmit = (e) => {
+  const handleSubmmit = async (e) => {
       e.preventDefault();
     
-      let vehicleID;
-      vehicles.forEach((vehicle) => {
-        if (vehicle.patent === patent) {
-          vehicleID = vehicle.id;
+      let vehicle = null;
+      vehicles.forEach((item) => {
+        if (item.patent === patent) {
+          vehicle = item;
+          console.log(vehicle);
         }
       })
 
-      const newWaypoint = {latitude, longitude, "vehicle_id": vehicleID};
-      //const newWaypoint = {latitude, longitude, patent};
-      const newVehicle = {patent};
-
-      console.log(newVehicle);
-
-      // if vehicle does not exist, we register it.
-      /*if (!vehicles.includes(newVehicle.patent)) {
-        fetch(`${URL}/vehicles`, {
+      if (!vehicle) {
+        console.log("no está registrado");
+        const response = await fetch(`${URL}/vehicles`, {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
-          body: JSON.stringify(newVehicle)
-        }).then(() => {
-          console.log("new vehicle added");
+          body: JSON.stringify({'patent': patent})
         });
-      };
-
-      */
+        if (response.ok){
+          vehicle = await response.json();
+        }
+        setVehicles(result => [...result, vehicle]);
+      }
+    
+      const newWaypoint = {latitude, longitude, "vehicle_id": vehicle.id};
 
       fetch(`${URL}/waypoints`, {
         method: 'POST',
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(newWaypoint)
       }).then(() =>{
-        console.log("new waypoint added");
-        console.log(newWaypoint);
         setWaypoints(result => [...result, newWaypoint]);
         setPointerXY({transform: `translate(${latitude}px, ${longitude}px)`});
-        console.log(waypoints);
       });
-
   }
 
   return (
@@ -131,4 +124,4 @@ function Example(props) {
   );
 }
 
-export default Example
+export default Waypoints
