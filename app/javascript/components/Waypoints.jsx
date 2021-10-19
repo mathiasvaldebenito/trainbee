@@ -1,55 +1,30 @@
 import React, { useState } from 'react';
 import Santiago from './../../assets/images/comunas.svg';
 import Pointer from './../../assets/images/location-icon.svg';
+import apiService from './services';
 
 const { URL } = require('./../packs/application');
 
 function Waypoints(props) {
-  // Declara una nueva variable de estado, la cual llamaremos “count”
   const [waypoints, setWaypoints] = useState([]);
   const [vehicles, setVehicles] = useState(props.vehicles);
-
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [patent, setPatent] = useState(''); 
-
   const [pointerXY, setPointerXY] = useState({transform: "translate(0px, 0px)", display: "none"});
 
 
   const handleSubmmit = async (e) => {
       e.preventDefault();
-    
-      let vehicle = null;
-      vehicles.forEach((item) => {
-        if (item.patent === patent) {
-          vehicle = item;
-          console.log(vehicle);
-        }
-      })
-
+      let vehicle = apiService.existVehicle(vehicles, patent);
       if (!vehicle) {
-        console.log("no está registrado");
-        const response = await fetch(`${URL}/vehicles`, {
-          method: 'POST',
-          headers: { "Content-Type": "application/json"},
-          body: JSON.stringify({'patent': patent})
-        });
-        if (response.ok){
-          vehicle = await response.json();
-        }
+        vehicle = await apiService.registerVehicle(URL, patent)
         setVehicles(result => [...result, vehicle]);
       }
-    
-      const newWaypoint = {latitude, longitude, "vehicle_id": vehicle.id};
-
-      fetch(`${URL}/waypoints`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(newWaypoint)
-      }).then(() =>{
-        setWaypoints(result => [...result, newWaypoint]);
-        setPointerXY({transform: `translate(${latitude}px, ${longitude}px)`});
-      });
+      const newWaypoint = await apiService.registerWaypoint(URL, 
+                  {latitude, longitude, "vehicle_id": vehicle.id});      
+      setWaypoints(result => [...result, newWaypoint]);
+      setPointerXY({transform: `translate(${newWaypoint.latitude}px, ${newWaypoint.longitude}px)`});
   }
 
   return (
@@ -84,7 +59,7 @@ function Waypoints(props) {
               <button className="btn">Enviar</button>
             </div>
           </form>
-          <div>
+          <div className="bitacora">
             <h2>Vehiculos registrados</h2> 
             <ul>
               { vehicles.map((vehicle) => (
@@ -95,7 +70,7 @@ function Waypoints(props) {
         </div>
         <div>
           <img src={Pointer} alt="Pointer" style={pointerXY}/>
-          <img src={Santiago} alt="Santiago" />
+          <img src={Santiago} alt="Santiago" className="map"/>
         </div>
         <div className="form">
           <table className="center">
@@ -111,7 +86,7 @@ function Waypoints(props) {
                 <tr key={waypoint.id}>
                   <td>{waypoint.latitude}</td>
                   <td>{waypoint.longitude}</td>
-                  <td>{waypoint.vehicle_id}</td>
+                  <td>{waypoint.patent}</td>
                 </tr>
                 )) 
               }

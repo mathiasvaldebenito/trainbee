@@ -65,5 +65,16 @@ ul {
     transform: translate(250px, 100px);
 }
 
+.bitacora {
+    width: 100%;
+    height: 30%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #fcf9d3;
+}
+
+.map {
+    margin: 20px;
+}
 
 

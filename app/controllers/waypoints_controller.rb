@@ -29,7 +29,8 @@ class WaypointsController < ApplicationController
 
     respond_to do |format|
       if @waypoint.save
-        msg = { :status => "ok", :message => "Success!", :html => "<b>...</b>" }
+        msg = {id: @waypoint.id,  latitude: @waypoint.latitude, 
+              longitude: @waypoint.longitude, patent: @waypoint.vehicle.patent}
         format.json  { render :json => msg }
       else
         format.html { render :new, status: :unprocessable_entity }
